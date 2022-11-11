@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.deployment.namespace }}
+  labels:
+    app: {{ .Values.deployment.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  replicas: {{ .Values.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: {{ .Values.deployment.container.name }}
+          image: {{ .Values.deployment.container.image }}@{{ .Values.deployment.container.digest }}
+          imagePullPolicy : Always
+          livenessProbe:
+            httpGet:
+              port: {{ .Values.deployment.container.port }}
+              path: {{ .Values.deployment.container.healthPath }}
+          readinessProbe:
+            httpGet:
+              port: {{ .Values.deployment.container.port }}
+              path: {{ .Values.deployment.container.healthPath }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              memory: {{ .Values.deployment.container.memoryLimit | default "500Mi" | quote }}
+              cpu: {{ .Values.deployment.container.cpuLimit | default "1" | quote }}
+            requests:
+              memory: {{ .Values.deployment.container.memoryRequest | default "250Mi" | quote }}
+              cpu: {{ .Values.deployment.container.cpuRequest | default ".5" | quote }}
+          ports:
+            - containerPort: {{ .Values.deployment.container.port }}
