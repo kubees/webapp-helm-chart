@@ -1,0 +1,29 @@
+deployment:
+  container:
+    cpuLimit: 1
+    cpuRequest: 0.5
+    digest: sha256:1e9b73f8fdba5bde7e231d7dc9bf426c05636dc09281641b44956b01bb1d3060
+    healthPath: /
+    image: aimvector/service-mesh
+    memoryLimit: 500Mi
+    memoryRequest: 500Mi
+    name: videos-web-container
+    port: 80
+  name: videos-web
+  namespace: frontend
+  replicas: 1
+serviceAccount:
+  name: videos-web-sa
+service:
+  name: videos-web
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
+ingress:
+  enabled: true
+  name: videos-web-ingress
+  host: videos-app.com
+  path: /home(/|$)(.*)
