@@ -2,9 +2,9 @@ deployment:
   container:
     cpuLimit: 1
     cpuRequest: 0.5
-    digest: sha256:1e9b73f8fdba5bde7e231d7dc9bf426c05636dc09281641b44956b01bb1d3060
+    digest: sha256:65c98e9a5bd03be73b9ba2ce77a6eab195379a5339e2ced63339ff0198b4ef1b
     healthPath: /
-    image: aimvector/service-mesh
+    image: ahmedgrati/videos-webapp
     memoryLimit: 500Mi
     memoryRequest: 500Mi
     name: videos-web-container
