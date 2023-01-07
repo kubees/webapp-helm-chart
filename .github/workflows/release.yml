@@ -17,6 +17,6 @@ jobs:
       - name: Helm release
         run: |
           curl --request POST \
-          --form 'chart=@playlist-helm-chart-0.1.0.tgz' \
+          --form 'chart=@webapp-helm-chart-0.1.0.tgz' \
           --user ${{ secrets.GITLAB_USERNAME }}:${{ secrets.GITLAB_TOKEN }} \
-          https://gitlab.com/api/v4/projects/42388143/packages/helm/api/stable/charts
+          https://gitlab.com/api/v4/projects/42388156/packages/helm/api/stable/charts
