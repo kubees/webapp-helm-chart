@@ -24,6 +24,19 @@ service:
       targetPort: 80
 ingress:
   enabled: true
-  name: videos-web-ingress
-  host: videos-app.com
-  path: /home(/|$)(.*)
+  rules:
+    - name: videos-web-ingress
+      host: kubees.videos.app.com
+      path: /
+      service: videos-web
+      port: 80
+    - name: playlist-microservice
+      host: kubees.api.playlist.com
+      path: /
+      service: playlist-api
+      port: 80
+    - name: videos-microservice
+      host: kubees.api.videos.com
+      path: /
+      service: videos-api
+      port: 10010
