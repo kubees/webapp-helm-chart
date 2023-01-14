@@ -22,11 +22,3 @@ service:
       name: http
       port: 80
       targetPort: 80
-ingress:
-  enabled: true
-  rules:
-    - name: videos-web-ingress
-      host: kubees.videos.app.com
-      path: /
-      service: videos-web
-      port: 80
